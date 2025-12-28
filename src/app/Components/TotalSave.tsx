@@ -1,5 +1,5 @@
-"use client"
-import React from 'react';
+"use client";
+import React from "react";
 
 type SaveItem = {
   id: number;
@@ -16,7 +16,7 @@ const TotalSave: React.FC<TotalSaveProps> = ({ items }) => {
   let totalMonthly = 0;
   let totalAnnual = 0;
 
-  items.forEach(item => {
+  items.forEach((item) => {
     const amount = parseFloat(item.amount as string) || 0;
     const rate = parseFloat(item.rate as string) || 0;
     const annual = (amount * rate) / 100;
@@ -26,13 +26,29 @@ const TotalSave: React.FC<TotalSaveProps> = ({ items }) => {
     totalMonthly += isNaN(monthly) ? 0 : monthly;
     totalDaily += isNaN(daily) ? 0 : daily;
   });
+  //add since today date
+  let today = new Date();
+  const todayValue = today.getDate() * totalDaily;
 
   return (
     <div className="total-section">
       <h3>Total Savings</h3>
-      <p>Total Daily Interest: <span className="ratebold">£{totalDaily.toFixed(2)}</span></p>
-      <p>Total Monthly Interest: <span className="ratebold">£{totalMonthly.toFixed(2)}</span></p>
-      <p>Total Annual Interest: <span className="ratebold">£{totalAnnual.toFixed(2)}</span></p>
+      <p>
+        Total Daily Interest:{" "}
+        <span className="ratebold">£{totalDaily.toFixed(2)}</span>
+      </p>
+      <p>
+        Interested Earned this Month:{" "}
+        <span className="ratebold">£{todayValue.toFixed(2)}</span>
+      </p>
+      <p>
+        Total Monthly Interest:{" "}
+        <span className="ratebold">£{totalMonthly.toFixed(2)}</span>
+      </p>
+      <p>
+        Total Annual Interest:{" "}
+        <span className="ratebold">£{totalAnnual.toFixed(2)}</span>
+      </p>
     </div>
   );
 };
